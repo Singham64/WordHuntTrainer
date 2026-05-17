@@ -35,11 +35,10 @@
         }
         /* Custom scrollbar for word bank */
         .word-bank-scroll::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         .word-bank-scroll::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
         }
         .word-bank-scroll::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
@@ -97,204 +96,230 @@
         </div>
     </header>
 
-    <!-- Main Dynamic Content Wrapper -->
-    <main class="flex-1 w-full max-w-lg mx-auto p-4 flex flex-col justify-center items-center overflow-hidden relative">
+    <!-- Main Dynamic Content Wrapper - Full width to allow scrollbar to touch browser edges -->
+    <main class="flex-1 w-full py-4 flex flex-col justify-center items-center overflow-hidden relative">
         
         <!-- ================= HOME SCREEN ================= -->
-        <div id="screenHome" class="w-full h-full flex flex-col justify-between py-6 space-y-6 overflow-y-auto word-bank-scroll">
-            <div class="text-center my-auto space-y-4">
-                <div class="inline-flex p-4 bg-sky-500/10 border border-sky-400/20 rounded-full mb-2">
-                    <i class="fa-solid fa-fire text-5xl text-amber-400 animate-bounce"></i>
-                </div>
-                <h2 class="text-4xl font-extrabold tracking-tight title-font">Train Your Brain</h2>
-                <p class="text-white/60 text-sm max-w-sm mx-auto leading-relaxed">
-                    Swipe or drag across adjacent letters in any direction to find words. Build up your speed and vocabulary!
-                </p>
+        <div id="screenHome" class="w-full h-full overflow-y-auto word-bank-scroll">
+            <!-- Inner Centered Box -->
+            <div class="max-w-lg mx-auto w-full min-h-full flex flex-col justify-between py-6 px-6 space-y-6">
+                <div class="text-center my-auto space-y-4">
+                    <div class="inline-flex p-4 bg-sky-500/10 border border-sky-400/20 rounded-full mb-2">
+                        <i class="fa-solid fa-fire text-5xl text-amber-400 animate-bounce"></i>
+                    </div>
+                    <h2 class="text-4xl font-extrabold tracking-tight title-font">Train Your Brain</h2>
+                    <p class="text-white/60 text-sm max-w-sm mx-auto leading-relaxed">
+                        Swipe or drag across adjacent letters in any direction to find words. Build up your speed and vocabulary!
+                    </p>
 
-                <!-- Session Progress / Stats Panel -->
-                <div class="bg-white/5 border border-white/10 p-4 rounded-3xl max-w-sm mx-auto text-left space-y-3">
-                    <h3 class="text-xs font-bold text-sky-400 uppercase tracking-widest flex items-center space-x-1">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <span>Today's Practice Stats</span>
-                    </h3>
-                    <div class="grid grid-cols-2 gap-2 text-center">
-                        <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
-                            <p class="text-[10px] text-white/40 uppercase font-semibold">High Score</p>
-                            <h4 id="statHighScore" class="text-xl font-black text-sky-400">0</h4>
+                    <!-- Session Progress / Stats Panel -->
+                    <div class="bg-white/5 border border-white/10 p-4 rounded-3xl max-w-sm mx-auto text-left space-y-3">
+                        <h3 class="text-xs font-bold text-sky-400 uppercase tracking-widest flex items-center space-x-1">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <span>Today's Practice Stats</span>
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2 text-center">
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                                <p class="text-[10px] text-white/40 uppercase font-semibold">High Score</p>
+                                <h4 id="statHighScore" class="text-xl font-black text-sky-400">0</h4>
+                            </div>
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                                <p class="text-[10px] text-white/40 uppercase font-semibold">Best Word</p>
+                                <h4 id="statBestWord" class="text-xs font-black text-emerald-400 truncate mt-1">None</h4>
+                            </div>
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                                <p class="text-[10px] text-white/40 uppercase font-semibold">Games Played</p>
+                                <h4 id="statGamesPlayed" class="text-xl font-black text-indigo-300">0</h4>
+                            </div>
+                            <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                                <p class="text-[10px] text-white/40 uppercase font-semibold">Total Words</p>
+                                <h4 id="statTotalWords" class="text-xl font-black text-amber-400">0</h4>
+                            </div>
                         </div>
-                        <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
-                            <p class="text-[10px] text-white/40 uppercase font-semibold">Best Word</p>
-                            <h4 id="statBestWord" class="text-xs font-black text-emerald-400 truncate mt-1">None</h4>
-                        </div>
-                        <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
-                            <p class="text-[10px] text-white/40 uppercase font-semibold">Games Played</p>
-                            <h4 id="statGamesPlayed" class="text-xl font-black text-indigo-300">0</h4>
-                        </div>
-                        <div class="bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
-                            <p class="text-[10px] text-white/40 uppercase font-semibold">Total Words</p>
-                            <h4 id="statTotalWords" class="text-xl font-black text-amber-400">0</h4>
-                        </div>
+                    </div>
+
+                    <!-- Dictionary Status -->
+                    <div id="dictLoadingStatus" class="inline-flex items-center bg-white/5 px-4 py-2 rounded-xl text-xs space-x-2 text-white/75 border border-white/5">
+                        <i class="fa-solid fa-circle-notch animate-spin text-sky-400"></i>
+                        <span>Loading Word Hunt Dictionary...</span>
                     </div>
                 </div>
 
-                <!-- Dictionary Status -->
-                <div id="dictLoadingStatus" class="inline-flex items-center bg-white/5 px-4 py-2 rounded-xl text-xs space-x-2 text-white/75 border border-white/5">
-                    <i class="fa-solid fa-circle-notch animate-spin text-sky-400"></i>
-                    <span>Loading Word Hunt Dictionary...</span>
+                <!-- Game Actions -->
+                <div class="space-y-3 w-full mt-auto">
+                    <button id="btnPlaySolo" class="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-600 hover:from-sky-500 hover:to-indigo-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-sky-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-3">
+                        <i class="fa-solid fa-stopwatch text-xl"></i>
+                        <div class="text-left">
+                            <p class="font-bold leading-tight">Classic Blitz Mode</p>
+                            <p class="text-[11px] text-sky-100/70 font-normal">Standard 80-second speed run</p>
+                        </div>
+                    </button>
+
+                    <button id="btnPlayZen" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-3">
+                        <i class="fa-solid fa-brain text-xl animate-pulse"></i>
+                        <div class="text-left">
+                            <p class="font-bold leading-tight">Zen Practice Mode</p>
+                            <p class="text-[11px] text-emerald-100/70 font-normal">Untimed study. Master long patterns!</p>
+                        </div>
+                    </button>
+
+                    <button id="btnShowRules" class="w-full py-3 text-white/50 hover:text-white/80 transition-all text-xs font-semibold flex items-center justify-center space-x-1">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>How to Play & Scoring Charts</span>
+                    </button>
                 </div>
-            </div>
-
-            <!-- Game Actions -->
-            <div class="space-y-3 w-full mt-auto">
-                <button id="btnPlaySolo" class="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-600 hover:from-sky-500 hover:to-indigo-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-sky-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-3">
-                    <i class="fa-solid fa-stopwatch text-xl"></i>
-                    <div class="text-left">
-                        <p class="font-bold leading-tight">Classic Blitz Mode</p>
-                        <p class="text-[11px] text-sky-100/70 font-normal">Standard 80-second speed run</p>
-                    </div>
-                </button>
-
-                <button id="btnPlayZen" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-3">
-                    <i class="fa-solid fa-brain text-xl animate-pulse"></i>
-                    <div class="text-left">
-                        <p class="font-bold leading-tight">Zen Practice Mode</p>
-                        <p class="text-[11px] text-emerald-100/70 font-normal">Untimed study. Master long patterns!</p>
-                    </div>
-                </button>
-
-                <button id="btnShowRules" class="w-full py-3 text-white/50 hover:text-white/80 transition-all text-xs font-semibold flex items-center justify-center space-x-1">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span>How to Play & Scoring Charts</span>
-                </button>
             </div>
         </div>
 
         <!-- ================= GAME BOARD SCREEN ================= -->
-        <div id="screenGame" class="w-full h-full hidden flex flex-col justify-between relative">
-            
-            <!-- Game HUD (Top Details) -->
-            <div class="flex justify-between items-center w-full px-2 py-1">
-                <div class="flex flex-col">
-                    <span class="text-xs font-semibold tracking-wider text-white/50 uppercase">Score</span>
-                    <span id="gameScore" class="text-3xl font-extrabold tracking-tight title-font text-sky-400">0</span>
-                </div>
+        <div id="screenGame" class="w-full h-full hidden overflow-y-auto word-bank-scroll">
+            <div class="max-w-lg mx-auto w-full h-full flex flex-col justify-between py-2 px-6 relative">
                 
-                <!-- Countdown Timer -->
-                <div class="relative flex items-center justify-center">
-                    <svg class="w-16 h-16 transform -rotate-90">
-                        <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="transparent"/>
-                        <circle id="timerCircle" cx="32" cy="32" r="26" stroke="#38bdf8" stroke-width="4" fill="transparent" stroke-dasharray="163" stroke-dashoffset="0" class="transition-all duration-1000"/>
+                <!-- Game HUD (Top Details) -->
+                <div class="flex justify-between items-center w-full px-2 py-1">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-semibold tracking-wider text-white/50 uppercase">Score</span>
+                        <span id="gameScore" class="text-3xl font-extrabold tracking-tight title-font text-sky-400">0</span>
+                    </div>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="relative flex items-center justify-center">
+                        <svg class="w-16 h-16 transform -rotate-90">
+                            <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.1)" stroke-width="4" fill="transparent"/>
+                            <circle id="timerCircle" cx="32" cy="32" r="26" stroke="#38bdf8" stroke-width="4" fill="transparent" stroke-dasharray="163" stroke-dashoffset="0" class="transition-all duration-1000"/>
+                        </svg>
+                        <span id="gameTimer" class="absolute text-lg font-black title-font">80</span>
+                    </div>
+
+                    <div class="flex flex-col items-end">
+                        <span id="wordCountLabel" class="text-xs font-semibold tracking-wider text-white/50 uppercase">Words</span>
+                        <span id="gameWordCount" class="text-3xl font-extrabold tracking-tight title-font text-emerald-400">0</span>
+                    </div>
+                </div>
+
+                <!-- Drag Selection Live Preview -->
+                <div class="h-10 flex items-center justify-center w-full my-2">
+                    <div id="liveWordBox" class="bg-indigo-500/10 border border-indigo-400/20 px-6 py-2 rounded-full hidden items-center justify-center transition-all duration-150 animate-pulse">
+                        <span id="liveWord" class="text-xl font-bold tracking-widest uppercase text-sky-300 title-font">---</span>
+                        <span id="liveWordVal" class="ml-3 text-xs font-bold text-white/50 bg-white/10 px-2 py-0.5 rounded-full">0 pts</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Grid Container -->
+                <div class="relative w-full aspect-square max-w-[360px] mx-auto bg-slate-900/60 p-4 rounded-3xl border border-white/10 shadow-2xl flex items-center justify-center">
+                    
+                    <!-- SVG Drag Connections Overlay -->
+                    <svg id="gridSvg" class="absolute inset-0 w-full h-full pointer-events-none z-10">
+                        <defs>
+                            <linearGradient id="grad-active" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="#818cf8" />
+                            </linearGradient>
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="6" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <polyline id="dragPolyline" points="" stroke="url(#grad-active)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)" opacity="0.85"/>
                     </svg>
-                    <!-- Displays timer in Blitz mode, or infinity symbol in Zen mode -->
-                    <span id="gameTimer" class="absolute text-lg font-black title-font">80</span>
+
+                    <!-- Float Score Container -->
+                    <div id="floatScoreContainer" class="absolute inset-0 pointer-events-none z-20"></div>
+
+                    <!-- 4x4 Grid of Tiles -->
+                    <div id="gridContainer" class="grid grid-cols-4 gap-3 w-full h-full relative z-0">
+                        <!-- Dynamic squares loaded by JS -->
+                    </div>
                 </div>
 
-                <div class="flex flex-col items-end">
-                    <span id="wordCountLabel" class="text-xs font-semibold tracking-wider text-white/50 uppercase">Words</span>
-                    <span id="gameWordCount" class="text-3xl font-extrabold tracking-tight title-font text-emerald-400">0</span>
+                <!-- Last Found Words Horizontal Bar -->
+                <div class="mt-4 w-full">
+                    <p class="text-xs font-bold text-white/40 uppercase tracking-wider mb-1 px-1">Words Swiped</p>
+                    <div id="wordBankList" class="flex flex-wrap gap-1.5 h-16 overflow-y-auto word-bank-scroll bg-white/5 border border-white/5 p-2 rounded-xl">
+                        <div id="noWordsText" class="text-xs text-white/30 italic m-auto">No words found yet. Connect adjacent letters!</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Drag Selection Live Preview -->
-            <div class="h-10 flex items-center justify-center w-full my-2">
-                <div id="liveWordBox" class="bg-indigo-500/10 border border-indigo-400/20 px-6 py-2 rounded-full hidden items-center justify-center transition-all duration-150 animate-pulse">
-                    <span id="liveWord" class="text-xl font-bold tracking-widest uppercase text-sky-300 title-font">---</span>
-                    <span id="liveWordVal" class="ml-3 text-xs font-bold text-white/50 bg-white/10 px-2 py-0.5 rounded-full">0 pts</span>
+                <!-- Controls -->
+                <div class="mt-4 flex justify-between items-center">
+                    <button id="btnPauseGame" class="px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 rounded-xl text-xs font-bold transition-all flex items-center space-x-1">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <span id="btnPauseText">Forfeit Hunt</span>
+                    </button>
+                    <span id="playingAsText" class="text-xs text-white/40 italic">Classic Mode</span>
                 </div>
-            </div>
-
-            <!-- Interactive Grid Container -->
-            <div class="relative w-full aspect-square max-w-[360px] mx-auto bg-slate-900/60 p-4 rounded-3xl border border-white/10 shadow-2xl flex items-center justify-center">
-                
-                <!-- SVG Drag Connections Overlay -->
-                <svg id="gridSvg" class="absolute inset-0 w-full h-full pointer-events-none z-10">
-                    <defs>
-                        <linearGradient id="grad-active" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#38bdf8" />
-                            <stop offset="100%" stop-color="#818cf8" />
-                        </linearGradient>
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="6" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                    </defs>
-                    <polyline id="dragPolyline" points="" stroke="url(#grad-active)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)" opacity="0.85"/>
-                </svg>
-
-                <!-- Float Score Container -->
-                <div id="floatScoreContainer" class="absolute inset-0 pointer-events-none z-20"></div>
-
-                <!-- 4x4 Grid of Tiles -->
-                <div id="gridContainer" class="grid grid-cols-4 gap-3 w-full h-full relative z-0">
-                    <!-- Dynamic squares loaded by JS -->
-                </div>
-            </div>
-
-            <!-- Last Found Words Horizontal Bar -->
-            <div class="mt-4 w-full">
-                <p class="text-xs font-bold text-white/40 uppercase tracking-wider mb-1 px-1">Words Swiped</p>
-                <div id="wordBankList" class="flex flex-wrap gap-1.5 h-16 overflow-y-auto word-bank-scroll bg-white/5 border border-white/5 p-2 rounded-xl">
-                    <div id="noWordsText" class="text-xs text-white/30 italic m-auto">No words found yet. Connect adjacent letters!</div>
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="mt-4 flex justify-between items-center">
-                <button id="btnPauseGame" class="px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-300 rounded-xl text-xs font-bold transition-all flex items-center space-x-1">
-                    <i class="fa-solid fa-circle-xmark"></i>
-                    <span id="btnPauseText">Forfeit Hunt</span>
-                </button>
-                <span id="playingAsText" class="text-xs text-white/40 italic">Classic Mode</span>
             </div>
         </div>
 
         <!-- ================= RESULTS SCREEN ================= -->
-        <div id="screenResults" class="w-full h-full hidden flex flex-col justify-between py-6">
-            <div class="text-center space-y-4 my-auto">
-                <div class="inline-flex p-4 bg-emerald-500/10 border border-emerald-400/20 rounded-full">
-                    <i class="fa-solid fa-flag-checkered text-4xl text-emerald-400"></i>
-                </div>
-                <h2 id="resultTitle" class="text-3xl font-extrabold tracking-tight title-font">Game Over!</h2>
-
-                <!-- Final Scores Presentation -->
-                <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto">
-                    <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col justify-center">
-                        <span class="text-xs text-white/40 uppercase tracking-widest font-bold">Your Score</span>
-                        <h1 id="resultFinalScore" class="text-4xl font-extrabold text-sky-400 mt-1">0</h1>
+        <div id="screenResults" class="w-full h-full hidden overflow-y-auto word-bank-scroll">
+            <div class="max-w-lg mx-auto w-full min-h-full flex flex-col justify-between py-6 px-6 space-y-6">
+                <div class="text-center space-y-4 my-auto w-full">
+                    <div class="inline-flex p-4 bg-emerald-500/10 border border-emerald-400/20 rounded-full">
+                        <i class="fa-solid fa-flag-checkered text-4xl text-emerald-400"></i>
                     </div>
-                    <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col justify-center">
-                        <span class="text-xs text-white/40 uppercase tracking-widest font-bold">Words Found</span>
-                        <h1 id="resultWordsFound" class="text-4xl font-extrabold text-emerald-400 mt-1">0</h1>
+                    <h2 id="resultTitle" class="text-3xl font-extrabold tracking-tight title-font">Game Over!</h2>
+
+                    <!-- Final Scores Presentation -->
+                    <div class="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+                        <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col justify-center">
+                            <span class="text-xs text-white/40 uppercase tracking-widest font-bold">Your Score</span>
+                            <h1 id="resultFinalScore" class="text-4xl font-extrabold text-sky-400 mt-1">0</h1>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col justify-center">
+                            <span class="text-xs text-white/40 uppercase tracking-widest font-bold">Words Found</span>
+                            <h1 id="resultWordsFound" class="text-4xl font-extrabold text-emerald-400 mt-1">0</h1>
+                        </div>
+                    </div>
+
+                    <!-- Best Word found in this match -->
+                    <div id="resultBestWordCard" class="max-w-sm mx-auto bg-indigo-500/10 border border-indigo-400/20 p-3.5 rounded-2xl hidden text-left items-center justify-between">
+                        <div>
+                            <p class="text-[10px] uppercase text-white/40 font-semibold tracking-wider">Best Word This Round</p>
+                            <h4 id="resultBestWordText" class="text-lg font-black text-sky-300">ABC</h4>
+                        </div>
+                        <span id="resultBestWordScore" class="bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-extrabold px-3 py-1 rounded-xl">+100 pts</span>
+                    </div>
+
+                    <!-- Tabs to switch between player words and complete solver -->
+                    <div class="max-w-sm mx-auto flex bg-white/5 p-1 rounded-2xl border border-white/10">
+                        <button id="btnTabYourWords" class="flex-1 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-sky-400 to-indigo-600 text-white transition-all shadow-md">
+                            Your Words (<span id="tabCountYour">0</span>)
+                        </button>
+                        <button id="btnTabAllWords" class="flex-1 py-2 text-xs font-bold text-white/50 hover:text-white rounded-xl transition-all">
+                            All Board Words (<span id="tabCountAll">0</span>)
+                        </button>
+                    </div>
+
+                    <!-- Scrollable list of found words / auto solver -->
+                    <div class="max-w-sm mx-auto bg-slate-900/60 border border-white/10 rounded-2xl p-4 text-left">
+                        
+                        <!-- Tab 1: Your Words Recap -->
+                        <div id="recapYourWords" class="space-y-2">
+                            <div id="resultWordBank" class="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto word-bank-scroll">
+                                <!-- Word recap cards dynamically generated -->
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Auto-Solver Recap -->
+                        <div id="recapAllWords" class="space-y-2 hidden">
+                            <div id="solverWordBank" class="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto word-bank-scroll">
+                                <!-- Auto solved cards dynamically generated -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Best Word found in this match -->
-                <div id="resultBestWordCard" class="max-w-sm mx-auto bg-indigo-500/10 border border-indigo-400/20 p-3.5 rounded-2xl hidden text-left items-center justify-between">
-                    <div>
-                        <p class="text-[10px] uppercase text-white/40 font-semibold tracking-wider">Best Word This Round</p>
-                        <h4 id="resultBestWordText" class="text-lg font-black text-sky-300">ABC</h4>
-                    </div>
-                    <span id="resultBestWordScore" class="bg-indigo-500/20 border border-indigo-500/30 text-indigo-200 text-xs font-extrabold px-3 py-1 rounded-xl">+100 pts</span>
+                <!-- Controls -->
+                <div class="space-y-3 w-full mt-6">
+                    <button id="btnPlayAgain" class="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-600 hover:from-sky-500 hover:to-indigo-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-sky-500/20 transition-all flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span id="btnPlayAgainText">Play Classic Again</span>
+                    </button>
+                    <button id="btnResultsBackToHome" class="w-full py-3 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white font-bold rounded-2xl transition-all text-sm">
+                        Back to Main Menu
+                    </button>
                 </div>
-
-                <!-- Scrollable list of found words -->
-                <div class="max-w-sm mx-auto bg-slate-900/60 border border-white/10 rounded-2xl p-4 text-left">
-                    <h3 class="text-xs font-extrabold text-white/40 uppercase tracking-wider mb-2">Detailed Word Recap</h3>
-                    <div id="resultWordBank" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto word-bank-scroll">
-                        <!-- Word recap cards -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="space-y-3 w-full mt-auto">
-                <button id="btnPlayAgain" class="w-full py-4 bg-gradient-to-r from-sky-400 to-indigo-600 hover:from-sky-500 hover:to-indigo-700 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-sky-500/20 transition-all flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-rotate-left"></i>
-                    <span id="btnPlayAgainText">Play Classic Again</span>
-                </button>
-                <button id="btnResultsBackToHome" class="w-full py-3 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white font-bold rounded-2xl transition-all text-sm">
-                    Back to Main Menu
-                </button>
             </div>
         </div>
 
@@ -354,8 +379,10 @@
 
     <!-- MAIN SOUND & LOGIC INTEGRATION SCRIPT -->
     <script>
-        // Dictionary & Backup
+        // Dictionary & Prefix Map
         let dictionary = new Set();
+        let prefixes = new Set(); // Optimized prefix cache for DFS solving speed
+
         // Fallback standard vocabulary for immediate gameplay fallback
         const backupWords = ["THE", "AND", "YOU", "THAT", "WAS", "FOR", "ARE", "WITH", "HIS", "THEY", "THIS", "HAVE", "FROM", "ONE", "HAD", "WORD", "BUT", "NOT", "WHAT", "ALL", "WERE", "WHEN", "YOUR", "CAN", "SAID", "THERE", "USE", "EACH", "WHICH", "SHE", "HOW", "THEIR", "WILL", "OTHER", "ABOUT", "OUT", "MANY", "THEN", "THEM", "THESE", "SOME", "HER", "WOULD", "MAKE", "LIKE", "HIM", "INTO", "TIME", "HAS", "LOOK", "TWO", "MORE", "WRITE", "GO", "SEE", "NUMBER", "WAY", "COULD", "PEOPLE", "MY", "THAN", "FIRST", "WATER", "BEEN", "CALL", "WHO", "OIL", "ITS", "NOW", "FIND", "LONG", "DOWN", "DAY", "DID", "GET", "COME", "MADE", "MAY", "PART", "OVER", "NEW", "SOUND", "TAKE", "ONLY", "LITTLE", "WORK", "KNOW", "PLACE", "YEAR", "LIVE", "ME", "BACK", "GIVE", "MOST", "VERY", "AFTER", "THING", "OUR", "JUST", "NAME", "GOOD", "SENT", "MAN", "THINK", "SAY", "GREAT", "WHERE", "HELP", "THROUGH", "MUCH", "BEFORE", "LINE", "RIGHT", "TOO", "MEAN", "OLD", "ANY", "SAME", "TELL", "BOY", "FOLLOW", "CAME", "WANT", "SHOW", "ALSO", "AROUND", "FORM", "THREE", "SMALL", "SET", "END", "DOES", "ANOTHER", "WELL", "LARGE", "MUST", "BIG", "EVEN", "SUCH", "BECAUSE", "TURN", "HERE", "WHY", "ASK", "WENT", "MEN", "READ", "LAND", "DIFFERENT", "HOME", "US", "MOVE", "TRY", "KIND", "HAND", "PICTURE", "AGAIN", "CHANGE", "OFF", "PLAY", "SPELL", "AIR", "AWAY", "ANIMAL", "HOUSE", "POINT", "PAGE", "LETTER", "MOTHER", "ANSWER", "FOUND", "STUDY", "STILL", "LEARN", "SHOULD", "AMERICA", "WORLD", "HIGH", "EVERY", "NEAR", "ADD", "FOOD", "BETWEEN", "OWN", "BELOW", "COUNTRY", "PLANT", "LAST", "SCHOOL", "FATHER", "KEEP", "TREE", "NEVER", "START", "CITY", "EARTH", "EYE", "LIGHT", "THOUGHT", "HEAD", "UNDER", "STORY", "SAW", "LEFT", "DON", "FEW", "WHILE", "ALONG", "MIGHT", "CLOSE", "SOMETHING", "SEEM", "NEXT", "HARD", "OPEN", "EXAMPLE", "BEGIN", "LIFE", "ALWAYS", "THOSE", "BOTH", "PAPER", "TOGETHER", "GOT", "GROUP", "OFTEN", "RUN", "IMPORTANT", "UNTIL", "CHILDREN", "SIDE", "FEET", "CAR", "MILE", "NIGHT", "WALK", "WHITE", "SEA", "BEGAN", "GROW", "TOOK", "RIVER", "FOUR", "CARRY", "STATE", "ONCE", "BOOK", "HEAR", "STOP", "WITHOUT", "SECOND", "LATE", "MISS", "IDEA", "ENOUGH", "EAT", "FACE", "WATCH", "FAR", "REAL", "ALMOST", "LET", "ABOVE", "GIRL", "SOMETIMES", "MOUNTAIN", "CUT", "YOUNG", "TALK", "SOON", "LIST", "SONG", "BEING", "LEAVE", "FAMILY", "BODY", "MUSIC", "COLOR", "STAND", "SUN", "QUESTION", "FISH", "AREA", "MARK", "DOG", "HORSE", "BIRDS", "PROBLEM", "COMPLETE", "ROOM", "KNEW", "SINCE", "EVER", "PIECE", "TOLD", "USUALLY", "DIDN", "FRIEND", "EASY", "HEARD", "ORDER", "RED", "DOOR", "SURE", "BECOME", "TOP", "SHIP", "ACROSS", "TODAY", "DURING", "SHORT", "BEST", "LOW", "HOURS", "BLACK", "PRODUCTS", "HAPPEN", "WHOLE", "MEASURE", "REMEMBER", "EARLY", "WIND", "ROCK", "SPACE", "COVER", "FAST", "SEVERAL", "HOLD", "HIMSELF", "TOWARD", "FIVE", "STEP", "MORNING", "PASSED", "VOWEL", "TRUE", "HUNDRED", "AGAINST", "PATTERN", "TABLE", "NORTH", "SLOW", "MAP", "SING", "WARM", "GROUND", "FALL", "KING", "TOWN", "FLY", "UNIT", "FIGURE", "ROAD", "COLD", "BEST", "MINDS", "HEART", "SING", "VOICE", "PLAN", "GAME", "STARS", "WHEAT", "WILD", "BOX", "EARS", "DEEP", "BLUE", "SQUARE", "BREAD", "RIDE", "CARE", "LIVE", "SAD", "WEST", "LAY", "ROSE", "COLD", "ROPE", "HEAT", "BABY", "SEED"];
 
@@ -487,9 +514,21 @@
             document.getElementById('statTotalWords').innerText = stats.totalWords;
         }
 
+        // Add single word to both direct set and optimized prefix lookup index
+        function addWordToDict(word) {
+            const trimmed = word.trim().toUpperCase();
+            if (trimmed.length >= 3 && trimmed.length <= 16) {
+                dictionary.add(trimmed);
+                // Pre-generate all prefix states to allow ultra-fast solver pruning
+                for (let i = 1; i < trimmed.length; i++) {
+                    prefixes.add(trimmed.substring(0, i));
+                }
+            }
+        }
+
         // Initialize Word Hunt Dictionary
         async function loadDictionary() {
-            backupWords.forEach(w => dictionary.add(w.toUpperCase()));
+            backupWords.forEach(addWordToDict);
             
             try {
                 // Fetch dictionary of English words in the background
@@ -497,12 +536,7 @@
                 if (res.ok) {
                     const text = await res.text();
                     const words = text.split('\n');
-                    words.forEach(word => {
-                        const trimmed = word.trim().toUpperCase();
-                        if (trimmed.length >= 3 && trimmed.length <= 16) {
-                            dictionary.add(trimmed);
-                        }
-                    });
+                    words.forEach(addWordToDict);
                     document.getElementById('dictLoadingStatus').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> <span class="text-emerald-400">Dictionary Loaded (${dictionary.size.toLocaleString()} words)</span>`;
                     setTimeout(() => {
                         document.getElementById('dictLoadingStatus').classList.add('transition-opacity', 'duration-500', 'opacity-0');
@@ -529,7 +563,7 @@
             if (screenId === 'results') document.getElementById('screenResults').classList.remove('hidden');
         }
 
-        // Word score multiplier rules
+        // Exact iMessage GamePigeon Word Hunt Scoring values
         function getWordValue(word) {
             const len = word.length;
             if (len < 3) return 0;
@@ -538,7 +572,57 @@
             if (len === 5) return 800;
             if (len === 6) return 1400;
             if (len === 7) return 2000;
-            return 2700 + (len - 8) * 700;
+            return 2700; // 8+ letters
+        }
+
+        // ================= AUTO-SOLVER DFS ENGINE =================
+        function solveBoard() {
+            const foundOnBoard = new Set();
+            const visited = new Array(16).fill(false);
+
+            function dfs(index, currentWord) {
+                visited[index] = true;
+                const tileLetter = boardLetters[index];
+                const nextWord = currentWord + tileLetter;
+
+                // Stop exploration if the constructed path can't possibly form a valid word prefix
+                if (!prefixes.has(nextWord) && !dictionary.has(nextWord)) {
+                    visited[index] = false;
+                    return;
+                }
+
+                if (nextWord.length >= 3 && dictionary.has(nextWord)) {
+                    foundOnBoard.add(nextWord);
+                }
+
+                // Grid exploration coordinates
+                const r = Math.floor(index / 4);
+                const c = index % 4;
+
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr === 0 && dc === 0) continue;
+                        const nr = r + dr;
+                        const nc = c + dc;
+                        if (nr >= 0 && nr < 4 && nc >= 0 && nc < 4) {
+                            const nextIdx = nr * 4 + nc;
+                            if (!visited[nextIdx]) {
+                                dfs(nextIdx, nextWord);
+                            }
+                        }
+                    }
+                }
+
+                visited[index] = false;
+            }
+
+            // Run search beginning at every cell
+            for (let i = 0; i < 16; i++) {
+                dfs(i, "");
+            }
+
+            // Return sorted descending by length and alphabetically
+            return Array.from(foundOnBoard).sort((a, b) => b.length - a.length || a.localeCompare(b));
         }
 
         // ================= GAMEPLAY ENGINE =================
@@ -665,17 +749,18 @@
                 bestWordCard.classList.remove('flex');
             }
 
-            // Build Recap Word List
-            const recapDiv = document.getElementById('resultWordBank');
-            recapDiv.innerHTML = '';
+            // --- POPULATE RECAP TAB 1 (Your Found Words) ---
+            const yourWordRecapDiv = document.getElementById('resultWordBank');
+            yourWordRecapDiv.innerHTML = '';
+            document.getElementById('tabCountYour').innerText = foundWords.size;
             
             if (foundWords.size === 0) {
-                recapDiv.innerHTML = `<span class="text-xs text-white/40 italic m-auto">No valid words detected. Tap Play Again to keep practicing!</span>`;
+                yourWordRecapDiv.innerHTML = `<span class="text-xs text-white/40 italic m-auto">No valid words detected. Tap Play Again to keep practicing!</span>`;
             } else {
                 Array.from(foundWords).sort((a,b) => b.length - a.length).forEach(w => {
                     const pts = getWordValue(w);
-                    recapDiv.innerHTML += `
-                        <div class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl text-xs flex justify-between items-center space-x-2">
+                    yourWordRecapDiv.innerHTML += `
+                        <div class="bg-indigo-500/10 border border-indigo-400/20 px-3 py-1.5 rounded-xl text-xs flex justify-between items-center space-x-2">
                             <span class="font-extrabold uppercase text-indigo-300 tracking-wider">${w}</span>
                             <span class="text-emerald-400 font-bold">+${pts}</span>
                         </div>
@@ -683,10 +768,62 @@
                 });
             }
 
+            // --- RUN BOARD SOLVER & POPULATE TAB 2 ---
+            const allPossibleSolutions = solveBoard();
+            const solverRecapDiv = document.getElementById('solverWordBank');
+            solverRecapDiv.innerHTML = '';
+            document.getElementById('tabCountAll').innerText = allPossibleSolutions.length;
+
+            if (allPossibleSolutions.length === 0) {
+                solverRecapDiv.innerHTML = `<span class="text-xs text-white/40 italic m-auto">No words possible on this grid! Strange board seed.</span>`;
+            } else {
+                allPossibleSolutions.forEach(w => {
+                    const pts = getWordValue(w);
+                    const wasFound = foundWords.has(w);
+                    // Beautiful custom highlight for words that the player succeeded in finding
+                    const cardStyle = wasFound 
+                        ? 'bg-emerald-500/10 border-emerald-400/40 text-emerald-300 shadow-md ring-1 ring-emerald-500/20' 
+                        : 'bg-white/5 border-white/10 text-white/70';
+                    const indicator = wasFound 
+                        ? `<span class="text-[10px] text-emerald-400 font-bold flex items-center space-x-0.5"><i class="fa-solid fa-check"></i> <span>FOUND</span></span>`
+                        : `<span class="text-[10px] text-white/30 font-semibold">+${pts}</span>`;
+
+                    solverRecapDiv.innerHTML += `
+                        <div class="border px-3 py-1.5 rounded-xl text-xs flex justify-between items-center space-x-2 ${cardStyle}">
+                            <span class="font-extrabold uppercase tracking-wider">${w}</span>
+                            ${indicator}
+                        </div>
+                    `;
+                });
+            }
+
+            // Always default screen to Your Words view
+            activateRecapTab('your');
+
             // Set play again button text matching mode
             document.getElementById('btnPlayAgainText').innerText = activeGameMode === 'zen' ? "Play Zen Practice Again" : "Play Classic Again";
 
             switchScreen('results');
+        }
+
+        // Results screen tab selector
+        function activateRecapTab(tab) {
+            const btnYour = document.getElementById('btnTabYourWords');
+            const btnAll = document.getElementById('btnTabAllWords');
+            const contentYour = document.getElementById('recapYourWords');
+            const contentAll = document.getElementById('recapAllWords');
+
+            if (tab === 'your') {
+                btnYour.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-sky-400 to-indigo-600 text-white transition-all shadow-md";
+                btnAll.className = "flex-1 py-2 text-xs font-bold text-white/50 hover:text-white rounded-xl transition-all";
+                contentYour.classList.remove('hidden');
+                contentAll.classList.add('hidden');
+            } else {
+                btnAll.className = "flex-1 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-sky-400 to-indigo-600 text-white transition-all shadow-md";
+                btnYour.className = "flex-1 py-2 text-xs font-bold text-white/50 hover:text-white rounded-xl transition-all";
+                contentAll.classList.remove('hidden');
+                contentYour.classList.add('hidden');
+            }
         }
 
         // ================= TOUCH / MOUSE SWIPE LOGIC =================
@@ -705,6 +842,7 @@
             return null;
         }
 
+        // Check adjacency between tiles
         function isAdjacent(idx1, idx2) {
             const r1 = Math.floor(idx1 / 4);
             const c1 = idx1 % 4;
@@ -767,6 +905,7 @@
             }
         }
 
+        // Process found word on touch release
         function handleEnd() {
             if (!isDragging) return;
             isDragging = false;
@@ -940,6 +1079,15 @@
 
             document.getElementById('btnPlayZen').addEventListener('click', () => {
                 startGame('zen');
+            });
+
+            // Recap Tab Click Handlers
+            document.getElementById('btnTabYourWords').addEventListener('click', () => {
+                activateRecapTab('your');
+            });
+
+            document.getElementById('btnTabAllWords').addEventListener('click', () => {
+                activateRecapTab('all');
             });
 
             // Gameplay Forfeit/End Control
